@@ -1,8 +1,10 @@
-﻿namespace LIST_STRUCTURE
+﻿using System.Data.Common;
+
+namespace LIST_STRUCTURE
 {
     internal class Program
     {
-        public class sehır
+        public class sehır : IComparable<sehır>
         {
             public int plaka_NO { get; set; }
             public string sehır_ADI { get; set; }
@@ -15,6 +17,22 @@
             public override string? ToString()
             {
                 return $"{plaka_NO,-5} - {sehır_ADI,5}"; 
+            }
+
+            int IComparable<sehır>.CompareTo(sehır? other)
+            {
+                if (this.plaka_NO < other.plaka_NO)
+                {
+                    return -1;
+                }
+                else if (this.plaka_NO == other.plaka_NO)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return 1;
+                }
             }
         }
 
@@ -37,7 +55,8 @@
                 new sehır(35, "izmir"),
                 new sehır(51, "niğde"),
             };
-
+            sehırler.Add(new sehır(1,"adana"));
+            sehırler.Sort();
             Console.WriteLine();
             sehırler.ForEach(a => Console.WriteLine(a));
 
